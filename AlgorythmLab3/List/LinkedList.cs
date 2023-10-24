@@ -1,5 +1,4 @@
-namespace AlgorythmLab3
-{
+namespace AlgorythmLab3.List;
 
 
     public class LinkedList<T>
@@ -154,7 +153,7 @@ namespace AlgorythmLab3
                         insertList.Tail.Next = currentNode.Next;
                     }
                     else
-                    {
+{
                         this.Tail = insertList.Tail;
                     }
                     currentNode.Next = insertList.Head;
@@ -162,7 +161,7 @@ namespace AlgorythmLab3
                     return;
                 }
             }
-
-        }
+    
+}
     }
 }
