@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlgorythmLab3
+namespace AlgorythmLab3.List
 {
     internal class Node<T>
     {
@@ -22,7 +22,7 @@ namespace AlgorythmLab3
         public Node<T>? Previous { get; set; }
 
         public Node(T data)
-        {
+    {
             Previous = null;
             Data = data;
             Next = null;
