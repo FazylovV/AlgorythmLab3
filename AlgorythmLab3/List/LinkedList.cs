@@ -486,7 +486,7 @@ public class LinkedList<T>
     /// <summary>
     /// Делит первоначальный список по входу полученного элемента. В первоначальном списке остаётся его левая часть, без этого элемента, в правом оставшаяся. 
     /// </summary>
-    public LinkedList<T> Split (int item)
+    public LinkedList<T> Split (T item)
     {
         LinkedList<T> newList = new();
         if (!IsNumericType(typeof(T)))
