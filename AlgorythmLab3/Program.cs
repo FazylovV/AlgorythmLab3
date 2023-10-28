@@ -1,3 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using AlgorythmLab3.List;
 
-Console.WriteLine("Hello, World!");
+namespace AlgorythmLab3
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            AlgorythmLab3.List.LinkedList<int> ints = new();
+            AlgorythmLab3.List.LinkedList<int> cuts = ints.Split(1);
+        }
+    }
+}
