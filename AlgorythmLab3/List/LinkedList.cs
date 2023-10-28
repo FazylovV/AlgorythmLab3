@@ -525,4 +525,40 @@ public class LinkedList<T>
         }
         return newList;
     }
+
+    /// <summary>
+    /// Находит в списке первые упоминания каждого объекта и меняет их местами.
+    /// </summary>
+    public void Swap (T firstItem, T secondItem)
+    {
+        Node<T> currentNode = head;
+        Node<T>? firstElem = null;
+        Node<T>? secondElem = null;
+        while (currentNode != null)
+        {
+            if (currentNode.Data.Equals(firstItem))
+            {
+                if (firstElem == null)
+                {
+                    firstElem = currentNode;
+                    if (secondElem != null) break;
+                }
+            }
+            if (currentNode.Data.Equals(secondItem))
+            {
+                if (secondElem == null)
+                {
+                    secondElem = currentNode;
+                    if (firstElem != null) break;
+                }
+            }
+            currentNode = currentNode.Next;
+        }
+        if (firstElem != null && secondElem != null)
+        {
+            firstElem.Data = secondItem;
+            secondElem.Data = firstItem;
+        }
+        return;
+    }
 }
