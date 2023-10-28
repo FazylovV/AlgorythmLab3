@@ -484,7 +484,7 @@ public class LinkedList<T>
         return count;
     }
     /// <summary>
-    /// Отделяет от первоначального списка новый список, начинающийся с указанного элемента.
+    /// Делит первоначальный список по входу полученного элемента. В первоначальном списке остаётся его левая часть, без этого элемента, в правом оставшаяся. 
     /// </summary>
     public LinkedList<T> Split (int item)
     {
@@ -524,5 +524,41 @@ public class LinkedList<T>
             currentNode = currentNode.Next;
         }
         return newList;
+    }
+
+    /// <summary>
+    /// Находит в списке первые упоминания каждого объекта и меняет их местами.
+    /// </summary>
+    public void Swap (T firstItem, T secondItem)
+    {
+        Node<T> currentNode = head;
+        Node<T>? firstElem = null;
+        Node<T>? secondElem = null;
+        while (currentNode != null)
+        {
+            if (currentNode.Data.Equals(firstItem))
+            {
+                if (firstElem == null)
+                {
+                    firstElem = currentNode;
+                    if (secondElem != null) break;
+                }
+            }
+            if (currentNode.Data.Equals(secondItem))
+            {
+                if (secondElem == null)
+                {
+                    secondElem = currentNode;
+                    if (firstElem != null) break;
+                }
+            }
+            currentNode = currentNode.Next;
+        }
+        if (firstElem != null && secondElem != null)
+        {
+            firstElem.Data = secondItem;
+            secondElem.Data = firstItem;
+        }
+        return;
     }
 }

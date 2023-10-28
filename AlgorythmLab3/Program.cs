@@ -7,7 +7,14 @@ namespace AlgorythmLab3
         public static void Main(string[] args)
         {
             AlgorythmLab3.List.LinkedList<int> ints = new();
-            AlgorythmLab3.List.LinkedList<int> cuts = ints.Split(1);
+            ints.AddTail(1);
+            ints.AddTail(2);
+            ints.AddTail(3);
+            ints.AddTail(4);
+            ints.AddTail(5);
+            ints.AddTail(6);
+            ints.Swap(3, 6);
+            ints.Swap(1, 6);
         }
     }
 }
