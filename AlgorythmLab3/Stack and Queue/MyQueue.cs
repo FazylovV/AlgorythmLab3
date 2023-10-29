@@ -8,78 +8,33 @@ using System.Threading.Tasks;
 
 namespace AlgorythmLab3.Stack_and_Queue
 {
-    public class MyQueue<T> : IEnumerable<T>
+    public class MyQueue<T>
     {
-        public QueueNode<T>? Head {  get; private set; }
-        public QueueNode<T>? Tail { get; private set; }
+        public List.LinkedList<T>? values {  get; private set; }
 
         public void Enqueue(T item)
         {
-            QueueNode<T> node = new(item);
-            if (Head == null)
-            {
-                Head = node;
-                Tail = node;
-            }
-            else
-            {
-                QueueNode<T> temp = Tail;
-                Tail = node;
-                temp.Next = Tail;
-            }
+            throw new NotImplementedException();
         }
 
         public T Dequeue()
         {
-            if(Head != null)
-            {
-                T value = Head.Data;
-                Head = Head.Next;
-                return value;
-            }
-            else
-            {
-                throw new InvalidOperationException();
-            }
+            throw new NotImplementedException();
         }
 
         public bool IsEmpty()
         {
-            return Head == null;
+            throw new NotImplementedException();
         }
 
         public T First()
         {
-            if (IsEmpty())
-            {
-                throw new InvalidOperationException();
-            }
-            return Head.Data;
+            throw new NotImplementedException();
         }
 
         public void Print()
         {
-            QueueNode<T> currentNode = Head;
-            while (currentNode != null)
-            {
-                Console.Write($" {currentNode.Data} ");
-                currentNode = currentNode.Next;
-            }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable)this).GetEnumerator();
-        }
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            QueueNode<T> current = Head;
-            while (current != null)
-            {
-                yield return current.Data;
-                current = current.Next;
-            }
+            throw new NotImplementedException();
         }
     }
 }
