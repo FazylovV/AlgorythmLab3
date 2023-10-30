@@ -1,6 +1,7 @@
 namespace AlgorythmLab3.List;
 
 using System.Collections.ObjectModel;
+using System.Text;
 using static TypeChecker;
 
 
@@ -486,48 +487,84 @@ public class LinkedList<T>
         }
         return count;
     }
+
+    /// <summary>
+    /// Метод, возвращающий список в формате строки.
+    /// </summary>
+    override public string ToString()
+    {
+        StringBuilder listStr = new();
+
+        Node<T> currentNode = head;
+        while (currentNode != null)
+        {
+            if (currentNode.Next == null)
+            {
+                listStr.Append(currentNode.Data.ToString());
+                break;
+            }
+            listStr.Append(currentNode.Data.ToString() + ", ");
+            currentNode = currentNode.Next;
+        }
+        return listStr.ToString();
+    }
+
     /// <summary>
     /// Делит первоначальный список по входу данного значения на два списка, изменяя первоначальный и возвращая отрезок.
     /// </summary>
-    public LinkedList<T> Split (int item)
+    public LinkedList<T> Split(T data)
     {
-        LinkedList<T> newList = new();
         if (!IsNumericType(typeof(T)))
         {
             Console.WriteLine("Этот метод используется только для списка с числовыми значениями.");
-            return newList;
+            return new LinkedList<T>();
         }
-        if (head == null) return newList;
-        Node<T> currentNode = head; 
+        if (Count == 0) return new LinkedList<T>();
+
+        LinkedList<T> substrList = new();
+        Node<T> currentNode = head;
         while (currentNode != null)
         {
-            if (currentNode.Data.Equals(item))
+            if (currentNode.Data.Equals(data))
             {
-                newList.head = currentNode;
-                newList.tail = tail;
-                
-                if (currentNode == head)
-                {
-                    head = null;
-                    tail = null;
-                    newList.Count = Count;
-                    Count = 0;
-                }
-                else
-                {
-                    currentNode.Previous.Next = null;
-                    tail = currentNode.Previous;
-                    currentNode.Previous = null;
-                    int previousCount = Count;
-                    Count = CountUntil(currentNode.Data);
-                    newList.Count = previousCount-Count;
-                }
-                return newList;
+                return Substring(currentNode);
             }
             currentNode = currentNode.Next;
         }
-        return newList;
+        return new LinkedList<T>();
     }
+
+
+    /// <summary>
+    /// Метод, возвращающий отделённую, начиная с заданного узла, часть списка.
+    /// </summary>
+    /// <param name="node">Узел, по которому происходит разделение.</param>
+    /// <returns></returns>
+    private LinkedList<T> Substring(Node<T> node)
+    {
+        LinkedList<T> substrList = new();
+        substrList.head = node;
+        substrList.tail = tail;
+
+        if (node == head)
+        {
+            head = null;
+            tail = null;
+            substrList.Count = Count;
+            Count = 0;
+        }
+        else
+        {
+            node.Previous.Next = null;
+            tail = node.Previous;
+            node.Previous = null;
+            int prevCount = Count;
+            Count = CountUntil(node.Data);
+            substrList.Count = prevCount - Count;
+        }
+        return substrList;
+    }
+
 
     /// <summary>
     /// Находит в списке первые упоминания каждого объекта и меняет их местами.
@@ -564,4 +601,34 @@ public class LinkedList<T>
         }
         return;
     }
+
+    /// <summary>
+    /// Метод, вставляющий в конец существующего списка другой.
+    /// </summary>
+    /// <param name="insertList">Вставляемый в конец список.</param>
+    public void InsertAsTail(LinkedList<T> insertList)
+    {
+        if (!IsIntegerType(typeof(T)))
+        {
+            Console.WriteLine("Этот метод используется только для целочисленного списка.");
+            return;
+        }
+        if (Count == 0) return;
+
+        LinkedList<T> copyOfInsList = insertList.Copy();
+        Insert(copyOfInsList, tail);
+    }
+
+    /// <summary>
+    /// Метод, вставляющий в конец списка его копию.
+    /// </summary>
+    public void InsertCopyAsTail()
+    {
+        if (Count == 0) return;
+
+        LinkedList<T> copyOfList = Copy();
+        Insert(copyOfList, tail);
+    }
+
+
 }
