@@ -4,7 +4,7 @@ public class MyStack : IStorable
 {
     
     
-    public void Push()
+    public void Push(object item)
     {
         throw new NotImplementedException();
     }

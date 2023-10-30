@@ -9,11 +9,11 @@ public class LinkedList<T>
     /// <summary>
     /// Первый добавленный элемент списка.
     /// </summary>
-    private Node<T> head;
+    public Node<T> head;
     /// <summary>
     /// Последний добавленный элемент списка.
     /// </summary>
-    private Node<T> tail;
+    public Node<T> tail;
 
     /// <summary>
     /// Число элементов в списке.
@@ -303,7 +303,10 @@ public class LinkedList<T>
         if (head == null) return;
 
         head = head.Next;
-        head.Previous = null;
+        if (head != null)
+        { 
+            head.Previous = null;
+        }
         Count--;
     }
 
