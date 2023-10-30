@@ -46,40 +46,7 @@ namespace AlgorythmLab3.Stack_and_Queue
 
         public long Execute(int n)
         {
-            return ProcessInput(Program.Inputs[n]);
-        }
-
-        private long ProcessInput(string input)
-        {
-            string[] operations = input.Split(" ");
-            MyQueueList<object> queue = new();
-
-            Stopwatch timer = new();
-            timer.Start();
-            foreach (string s in operations)
-            {
-                switch (s[0])
-                {
-                    case '1':
-                        queue.Push(s.Split(",")[1]);
-                        break;
-                    case '2':
-                        queue.Pop();
-                        break;
-                    case '3':
-                        queue.Top();
-                        break;
-                    case '4':
-                        queue.IsEmpty();
-                        break;
-                    case '5':
-                        queue.Print();
-                        break;
-                }
-            }
-            timer.Stop();
-
-            return timer.ElapsedTicks;
+            return Measurements.ProcessInput(Program.Inputs[n], new MyQueueList<object>());
         }
     }
 
