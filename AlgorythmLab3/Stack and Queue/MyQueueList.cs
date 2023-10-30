@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace AlgorythmLab3.Stack_and_Queue
 {
     public class MyQueueList<T> : IStorable<T>, IExecutable
     {
-        public List.LinkedList<object>? Values { get; private set; } = new();
+        public List.LinkedList<T>? Values { get; private set; } = new();
 
         public void Push(T item)
         {
@@ -35,7 +36,7 @@ namespace AlgorythmLab3.Stack_and_Queue
         }
         public void Print()
         {
-            Node<object> value = Values.head;
+            Node<T> value = Values.head;
             while (value != null)
             {
                 Console.Write($"{value.Data} ");
@@ -43,24 +44,19 @@ namespace AlgorythmLab3.Stack_and_Queue
             }
         }
 
-        public void Execute(int n)
+        public long Execute(int n)
         {
-            ProcessInput(Program.Inputs[n]);
+            return ProcessInput(Program.Inputs[n]);
         }
 
-        private void ProcessInput(string input)
+        private long ProcessInput(string input)
         {
-            string[] data = new string[1];
-            if(input.Split(" ").Length > 1)
-            {
-                data = input.Split(" ");
-            }
-            else
-            {
-                data = new string[1] { input };
-            }
+            string[] operations = input.Split(" ");
             MyQueueList<object> queue = new();
-            foreach (string s in data)
+
+            Stopwatch timer = new();
+            timer.Start();
+            foreach (string s in operations)
             {
                 switch (s[0])
                 {
@@ -81,11 +77,9 @@ namespace AlgorythmLab3.Stack_and_Queue
                         break;
                 }
             }
-        }
+            timer.Stop();
 
-        public static long Timer(int variableCount)
-        {
-            return Measurements.Timer(variableCount, new MyQueueList<object>());
+            return timer.ElapsedTicks;
         }
     }
 

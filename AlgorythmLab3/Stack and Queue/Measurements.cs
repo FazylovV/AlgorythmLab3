@@ -12,7 +12,7 @@ namespace AlgorythmLab3.Stack_and_Queue
     {
         public static readonly string SavePath = "C:\\test";
 
-        public static Data RequestTheData(string name)
+        public static Data RequestTheData(string name, IExecutable clas)
         {
             Console.WriteLine($"Введите максимальный размер входных данных, шаг и количество проверок(через одиночные пробелы) для алгоритма {name.Replace(".Timer", "")}");
 
@@ -20,14 +20,13 @@ namespace AlgorythmLab3.Stack_and_Queue
             if (IsInputCorrect(input) == false)
             {
                 Console.WriteLine("Некоректный ввод, попробуйте снова");
-                RequestTheData(name);
+                RequestTheData(name, clas);
             }
             int variablesCount = Int32.Parse(input[0]);
             int steps = Int32.Parse(input[1]);
             int testsCount = Int32.Parse(input[2]);
-            return MeasureTheTime(name, variablesCount, testsCount, steps);
+            return MeasureTheTime(clas, variablesCount, testsCount, steps, name);
         }
-
 
         private static bool IsInputCorrect(string[] input)
         {
@@ -45,7 +44,7 @@ namespace AlgorythmLab3.Stack_and_Queue
             return true;
         }
 
-        private static Data MeasureTheTime(string name, int variablesCount, int testsCount, int steps)
+        private static Data MeasureTheTime(IExecutable clas , int variablesCount, int testsCount, int steps, string name)
         {
             long[] timeNotes = new long[testsCount];
             List<double> doubleTimeNotes = new();
@@ -55,7 +54,7 @@ namespace AlgorythmLab3.Stack_and_Queue
             {
                 for (int j = 0; j < testsCount; j++)
                 {
-                    timeNotes[j] = ReflexChooseAlg(name, i);
+                    timeNotes[j] = clas.Execute(i);
                 }
                 stepList.Add(i);
                 long avarageTime = timeNotes.Sum() / testsCount;
@@ -63,33 +62,6 @@ namespace AlgorythmLab3.Stack_and_Queue
                 doubleTimeNotes.Add(avarageTime);
             }
             return new Data(stepList, doubleTimeNotes, name);
-        }
-
-        private static long ReflexChooseAlg(string name, int variablesCount)
-        {
-            string[] algClassAndMeth = name.Split('.');
-            string className = $"AlgorythmLab3.Stack_and_Queue.{algClassAndMeth[0]}";
-            string methodName = algClassAndMeth[1];
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Type type = assembly.GetType(className);
-            MethodInfo methodInfo = type.GetMethod(methodName, new Type[] { typeof(int) });
-            object instance = Activator.CreateInstance(type);
-            return (long)methodInfo.Invoke(instance, new object[] { variablesCount });
-        }
-        public static long Timer(int variableCount, IExecutable executable)
-        {
-            Stopwatch timer = new();
-
-            if (Program.Inputs[variableCount] == null)
-            {
-                Program.Inputs[variableCount] = Input.CreateInput(variableCount);
-            }
-
-            timer.Start();
-            executable.Execute(variableCount);
-            timer.Stop();
-
-            return timer.ElapsedMilliseconds;
         }
     }
 }

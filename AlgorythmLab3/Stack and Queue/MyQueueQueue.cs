@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace AlgorythmLab3.Stack_and_Queue
 {
     class MyQueueQueue<T> : IStorable<T>, IExecutable
     {
-        public Queue<object> Values { get; private set; }
+        public Queue<T> Values { get; private set; } = new();
 
         public bool IsEmpty()
         {
@@ -37,24 +38,19 @@ namespace AlgorythmLab3.Stack_and_Queue
         {
             return Values.Peek();
         }
-        public void Execute(int n)
+        public long  Execute(int n)
         {
-            ProcessInput(Program.Inputs[n]);
+            return ProcessInput(Program.Inputs[n]);
         }
 
-        private void ProcessInput(string input)
+        private long ProcessInput(string input)
         {
-            string[] data = new string[1];
-            if (input.Split(" ").Length > 1)
-            {
-                data = input.Split(" ");
-            }
-            else
-            {
-                data = new string[1] { input };
-            }
-            MyQueueList<object> queue = new();
-            foreach (string s in data)
+            string[] operations = input.Split(" ");
+            MyQueueQueue<object> queue = new();
+
+            Stopwatch timer = new();
+            timer.Start();
+            foreach (string s in operations)
             {
                 switch (s[0])
                 {
@@ -75,11 +71,8 @@ namespace AlgorythmLab3.Stack_and_Queue
                         break;
                 }
             }
-        }
-
-        public static long Timer(int variableCount)
-        {
-            return Measurements.Timer(variableCount, new MyQueueQueue<object>());
+            timer.Stop();
+            return timer.ElapsedTicks;
         }
     }
 }
