@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace AlgorythmLab3.Stack_and_Queue
 {
-    public class MyQueueList : IStorable, IExecutable
+    public class MyQueueList<T> : IStorable<T>, IExecutable
     {
         public List.LinkedList<object>? Values { get; private set; } = new();
 
-        public void Push(object item)
+        public void Push(T item)
         {
             Values.AddTail(item);
         }
@@ -59,7 +59,7 @@ namespace AlgorythmLab3.Stack_and_Queue
             {
                 data = new string[1] { input };
             }
-            MyQueueList queue = new();
+            MyQueueList<object> queue = new();
             foreach (string s in data)
             {
                 switch (s[0])
@@ -85,7 +85,7 @@ namespace AlgorythmLab3.Stack_and_Queue
 
         public static long Timer(int variableCount)
         {
-            return Measurements.Timer(variableCount, new MyQueueList());
+            return Measurements.Timer(variableCount, new MyQueueList<object>());
         }
     }
 

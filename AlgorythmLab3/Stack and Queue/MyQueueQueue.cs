@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlgorythmLab3.Stack_and_Queue
 {
-    class MyQueueQueue : IStorable, IExecutable
+    class MyQueueQueue<T> : IStorable<T>, IExecutable
     {
         public Queue<object> Values { get; private set; }
 
@@ -28,7 +28,7 @@ namespace AlgorythmLab3.Stack_and_Queue
             }
         }
 
-        public void Push(object item)
+        public void Push(T item)
         {
             Values.Enqueue(item);
         }
@@ -53,7 +53,7 @@ namespace AlgorythmLab3.Stack_and_Queue
             {
                 data = new string[1] { input };
             }
-            MyQueueList queue = new();
+            MyQueueList<object> queue = new();
             foreach (string s in data)
             {
                 switch (s[0])
@@ -79,7 +79,7 @@ namespace AlgorythmLab3.Stack_and_Queue
 
         public static long Timer(int variableCount)
         {
-            return Measurements.Timer(variableCount, new MyQueueQueue());
+            return Measurements.Timer(variableCount, new MyQueueQueue<object>());
         }
     }
 }

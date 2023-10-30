@@ -1,10 +1,8 @@
 namespace AlgorythmLab3.Stack_and_Queue;
 
-public class MyStack : IStorable
+public class MyStack<T> : IStorable<T>
 {
-    
-    
-    public void Push(object item)
+    public void Push(T obj)
     {
         throw new NotImplementedException();
     }
