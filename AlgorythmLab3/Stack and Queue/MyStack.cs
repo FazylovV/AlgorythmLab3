@@ -1,4 +1,5 @@
 using AlgorythmLab3.List;
+using System.Collections;
 
 namespace AlgorythmLab3.Stack_and_Queue;
 
@@ -47,5 +48,15 @@ public class MyStack<T> : IStorable<T>, IExecutable
     public long Execute(int n)
     {
         return Measurements.ProcessInput(Program.Inputs[n], new MyStack<object>());
+    }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        throw new NotImplementedException();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        throw new NotImplementedException();
     }
 }

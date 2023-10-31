@@ -69,31 +69,68 @@ namespace AlgorythmLab3.Stack_and_Queue
             string[] operations = input.Split(" ");
 
             Stopwatch timer = new();
+            Console.WriteLine($"Число операций: {operations.Length}");
             timer.Start();
             foreach (string s in operations)
             {
                 switch (s[0])
                 {
                     case '1':
+                        timer.Stop();
+                        Console.WriteLine($"Добавлен элемент {s.Split(",")[1]}");
+                        ConsoleHelper.PrintOldStructure(storable, true);
+                        timer.Start();
                         storable.Push(s.Split(",")[1]);
+                        timer.Stop();
+                        ConsoleHelper.PrintNewStructure(storable);
+                        timer.Start();
                         break;
                     case '2':
+                        timer.Stop();
+                        Console.WriteLine($"Извлечён элемент {storable.Top}");
+                        ConsoleHelper.PrintOldStructure(storable, true);
+                        timer.Start();
                         storable.Pop();
+                        timer.Stop();
+                        ConsoleHelper.PrintNewStructure(storable);
+                        Console.Write("\r\n\r\n\r\n");
+                        Console.Write("\r\n\r\n\r\n");
+                        timer.Start();
                         break;
                     case '3':
+                        timer.Stop();
+                        Console.WriteLine($"Показан элемент {storable.Top}");
+                        ConsoleHelper.PrintOldStructure(storable, true);
+                        timer.Start();
                         storable.Top();
+                        timer.Stop();
+                        ConsoleHelper.PrintNewStructure(storable);
+                        Console.Write("\r\n\r\n\r\n");
+                        timer.Start();
                         break;
                     case '4':
+                        timer.Stop();
+                        Console.WriteLine("Вызвана проверка на пустоту.");
+                        Console.WriteLine($"{storable.IsEmpty}");
+                        ConsoleHelper.PrintOldStructure(storable, true);
+                        timer.Start();
                         storable.IsEmpty();
+                        timer.Stop();
+                        ConsoleHelper.PrintNewStructure(storable);
+                        Console.Write("\r\n\r\n\r\n");
+                        timer.Start();
                         break;
                     case '5':
+                        timer.Stop();
+                        Console.WriteLine("Структура выведена в консоль.");
+                        timer.Start();
                         storable.Print();
                         break;
                 }
             }
             timer.Stop();
 
-            return timer.ElapsedTicks;
+            return timer.ElapsedMilliseconds;
         }
     }
 }

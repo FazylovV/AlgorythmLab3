@@ -1,6 +1,6 @@
 namespace AlgorythmLab3.Stack_and_Queue;
 
-public interface IStorable<T>
+public interface IStorable<T> : IEnumerable<T>
 {
     void Push(T obj);
     object Pop();

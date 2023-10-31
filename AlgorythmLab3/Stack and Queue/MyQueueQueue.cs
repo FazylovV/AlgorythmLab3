@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AlgorythmLab3.List;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,64 +17,74 @@ namespace AlgorythmLab3.Stack_and_Queue
         {
             return Values.Count == 0;
         }
+        public void IsEmptyForConsole()
+        {
+            if (Values.Count == 0)
+            {
+                Console.WriteLine("Очередь пуста.");
+                return;
+            }
+            Console.WriteLine("Очередь не пуста.");
+        }
 
         public object Pop()
         {
             return Values.Dequeue();
         }
+        public void PopForConsole()
+        {
+            object firstElement = Values.Dequeue;
+            Console.WriteLine(firstElement);
+        }
 
         public void Print()
         {
-            foreach(object item in Values)
-            {
-                Console.Write($"{item} ");
-            }
+            ConsoleHelper.PrintOldStructure((IStorable<object>)this, false);
         }
 
         public void Push(T item)
         {
             Values.Enqueue(item);
         }
+        public void PushForConsole()
+        {
+            IStorable<object> structure = (IStorable<object>)this;
+            Console.Write("Введите новый элемент: ");
+            string element = Console.ReadLine();
+
+            while (element.Length == 0)
+            {
+                Console.Write("Неверный ввод, попробуйте снова: ");
+                element = Console.ReadLine();
+            }
+            structure.Push(element);
+        }
 
         public object Top()
         {
             return Values.Peek();
         }
-        public long  Execute(int n)
+        public void TopForConsole()
         {
-            return ProcessInput(Program.Inputs[n]);
+            Console.WriteLine(Values.Peek);
         }
 
-        private long ProcessInput(string input)
+        public long  Execute(int n)
         {
-            string[] operations = input.Split(" ");
-            MyQueueQueue<object> queue = new();
+            return Measurements.ProcessInput(Program.Inputs[n], new MyQueueQueue<object>());
+        }
 
-            Stopwatch timer = new();
-            timer.Start();
-            foreach (string s in operations)
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Values.GetEnumerator();
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            foreach(T t in Values)
             {
-                switch (s[0])
-                {
-                    case '1':
-                        queue.Push(s.Split(",")[1]);
-                        break;
-                    case '2':
-                        queue.Pop();
-                        break;
-                    case '3':
-                        queue.Top();
-                        break;
-                    case '4':
-                        queue.IsEmpty();
-                        break;
-                    case '5':
-                        queue.Print();
-                        break;
-                }
+                yield return t;
             }
-            timer.Stop();
-            return timer.ElapsedTicks;
         }
     }
 }
