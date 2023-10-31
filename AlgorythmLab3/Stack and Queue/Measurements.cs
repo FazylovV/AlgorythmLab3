@@ -63,5 +63,37 @@ namespace AlgorythmLab3.Stack_and_Queue
             }
             return new Data(stepList, doubleTimeNotes, name);
         }
+        
+        public static long ProcessInput(string input, IStorable<object> storable)
+        {
+            string[] operations = input.Split(" ");
+
+            Stopwatch timer = new();
+            timer.Start();
+            foreach (string s in operations)
+            {
+                switch (s[0])
+                {
+                    case '1':
+                        storable.Push(s.Split(",")[1]);
+                        break;
+                    case '2':
+                        storable.Pop();
+                        break;
+                    case '3':
+                        storable.Top();
+                        break;
+                    case '4':
+                        storable.IsEmpty();
+                        break;
+                    case '5':
+                        storable.Print();
+                        break;
+                }
+            }
+            timer.Stop();
+
+            return timer.ElapsedTicks;
+        }
     }
 }
