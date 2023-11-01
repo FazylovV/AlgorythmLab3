@@ -21,6 +21,76 @@ namespace AlgorythmLab3
             ShowTheListMethodsMenu(dataType);
         }
 
+        public void ShowChooseMenu ()
+        {
+            Console.CursorVisible = false;
+            string header = "Выберите желаемую структуру для дальнейшей работы:";
+            List<MenuItem> listTypeMenuItems = new()
+            {
+                new MenuItem("Связный список"),
+                new MenuItem("Стэк"),
+                new MenuItem("Очередь")
+            };
+            Menu listTypeMenu = new(listTypeMenuItems);
+            listTypeMenu.MoveThroughForSelect(header);
+            MenuItem selectedItem = listTypeMenuItems[listTypeMenu.SelectedItemIndex];
+            switch (selectedItem.ItemMessage)
+            {
+                case "Связный список":
+                    {
+                        Type dataType = ShowTheListTypeMenu();
+                        ShowTheListMethodsMenu(dataType);
+                        break;
+                    }
+                case "Стэк": 
+                    {
+                        ShowTheStackMethodsMenu();
+                        break;
+                    }
+                case "Очередь":
+                    {
+                        ShowTheQueueMethodsMenu();
+                        break;
+                    } 
+                    
+                default: return;
+            }
+
+        }
+        /// <summary>
+        /// Метод, отображающий меню для управления очередью.
+        /// </summary>
+        private void ShowTheQueueMethodsMenu()
+        {
+            Console.CursorVisible = false;
+            string header = ""; // Тут пишете заголовок меню
+            List<MenuItem> listTypeMenuItems = new()
+            {
+                //тут должны быть созданы итемы с названием кнопок
+            };
+            Menu listTypeMenu = new(listTypeMenuItems);
+            listTypeMenu.MoveThroughForSelect(header);
+            string selectedItem = listTypeMenuItems[listTypeMenu.SelectedItemIndex].ItemMessage;
+            // Дальше можете через выбранный предмет сделать свитч/кейс или рефлексию, как хотите
+        }
+
+        /// <summary>
+        /// Метод, отображающий меню для управления стэком.
+        /// </summary>
+        private void ShowTheStackMethodsMenu()
+        {
+            Console.CursorVisible = false;
+            string header = ""; // Тут пишете заголовок меню
+            List<MenuItem> listTypeMenuItems = new()
+            {
+               //тут должны быть созданы итемы с названием кнопок
+            };
+            Menu listTypeMenu = new(listTypeMenuItems);
+            listTypeMenu.MoveThroughForSelect(header);
+            string selectedItem = listTypeMenuItems[listTypeMenu.SelectedItemIndex].ItemMessage;
+            // Дальше можете через выбранный предмет сделать свитч/кейс или рефлексию, как хотите
+        }
+
         /// <summary>
         /// Метод, отображающий меню выбора типа данных для списка.
         /// </summary>
@@ -71,7 +141,7 @@ namespace AlgorythmLab3
                 new MenuItem("Удвоить список[11]"),
                 new MenuItem("Поменять местами два заданных элемента[12]"),
                 new MenuItem("СБРОСИТЬ ТЕКУЩИЙ СПИСОК"),
-                new MenuItem("ВЫХОД")
+                new MenuItem("Выход в меню")
             };
 
             List<string> methodNames = new()
