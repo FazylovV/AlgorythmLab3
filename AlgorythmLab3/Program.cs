@@ -1,6 +1,7 @@
 ﻿using AlgorythmLab3.List;
 using AlgorythmLab3.Stack_and_Queue;
 using System.Runtime.ExceptionServices;
+using AlgorythmLab3.Postfix;
 
 namespace AlgorythmLab3
 {
@@ -12,13 +13,20 @@ namespace AlgorythmLab3
         /// </summary>
         public static Menu? ListMethodsMenu { get; private set; }
 
+        public static string[] Inputs;
+
         /// <summary>
         /// Метод входа в программу.
         /// </summary>
         public static void Main()
         {
-            Type dataType = ShowTheListTypeMenu();
-            ShowTheListMethodsMenu(dataType);
+            // Type dataType = ShowTheListTypeMenu();
+            // ShowTheListMethodsMenu(dataType);
+            string normal = "2+2*8+4*6";
+            Console.WriteLine(normal);
+            string postfix = Converter.ConvertToPostfix(normal);
+            Console.WriteLine(postfix);
+            Console.WriteLine(Calculator.Calculate(postfix));
         }
 
         public void ShowChooseMenu ()
