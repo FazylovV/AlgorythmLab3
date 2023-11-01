@@ -8,6 +8,15 @@ namespace AlgorythmLab3.List
 {
     public class TypeChecker
     {
+
+        public readonly static Dictionary<string, string> RusTypeSystemTypePairs = new()
+        {
+            { "Строковый тип данных", "System.String" },
+            { "Целое число", "System.Int32" },
+            { "Целое число большей разрядности", "System.Int64" },
+            { "Число с плавающей запятой", "System.Double" },
+            { "Число с плавающей запятой одинарной точности", "System.Single" },
+        };
         /// <summary>
         /// Метод, проверяющий тип данных на целочисленность.
         /// </summary>
