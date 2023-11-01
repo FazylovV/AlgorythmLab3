@@ -5,7 +5,8 @@ namespace AlgorythmLab3.Postfix;
 
 public class Converter
 {
-    /*MyStack<int> s = new MyStack<int>();
+    MyStack<char> st = new MyStack<char>();
+    private Stack<char> s = new Stack<char>();
     private string str_in = Console.ReadLine();
     private char last = ' ';
     protected StringBuilder str_out = new StringBuilder();
@@ -108,5 +109,5 @@ public class Converter
         }
 
         return d;
-    }*/
+    }
 }

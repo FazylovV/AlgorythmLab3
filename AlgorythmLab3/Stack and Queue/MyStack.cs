@@ -19,6 +19,7 @@ public class MyStack<T> : IStorable<T>, IExecutable, IConsolable
 
     public object Pop()
     {
+        if (_list.head == null) return 0;
         object obj = _list.head.Data;
         _list.RemoveHead();
         return obj;
