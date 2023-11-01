@@ -1,85 +1,90 @@
-﻿using System;
+﻿using AlgorythmLab3.List;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AlgorythmLab3.Stack_and_Queue
 {
-    class MyQueueQueue : IStorable, IExecutable
+    class MyQueueQueue<T> : IStorable<T>, IExecutable
     {
-        public Queue<object> Values { get; private set; }
+        public Queue<T> Values { get; private set; } = new();
 
         public bool IsEmpty()
         {
             return Values.Count == 0;
+        }
+        public void IsEmptyForConsole()
+        {
+            if (Values.Count == 0)
+            {
+                Console.WriteLine("Очередь пуста.");
+                return;
+            }
+            Console.WriteLine("Очередь не пуста.");
         }
 
         public object Pop()
         {
             return Values.Dequeue();
         }
+        public void PopForConsole()
+        {
+            object firstElement = Values.Dequeue;
+            Console.WriteLine(firstElement);
+        }
 
         public void Print()
         {
-            foreach(object item in Values)
-            {
-                Console.Write($"{item} ");
-            }
+            ConsoleHelper.PrintOldStructure((IStorable<object>)this, false);
         }
 
-        public void Push(object item)
+        public void Push(T item)
         {
             Values.Enqueue(item);
+        }
+        public void PushForConsole()
+        {
+            IStorable<object> structure = (IStorable<object>)this;
+            Console.Write("Введите новый элемент: ");
+            string element = Console.ReadLine();
+
+            while (element.Length == 0)
+            {
+                Console.Write("Неверный ввод, попробуйте снова: ");
+                element = Console.ReadLine();
+            }
+            structure.Push(element);
         }
 
         public object Top()
         {
             return Values.Peek();
         }
-        public void Execute(int n)
+        public void TopForConsole()
         {
-            ProcessInput(Program.Inputs[n]);
+            Console.WriteLine(Values.Peek);
         }
 
-        private void ProcessInput(string input)
+        public long  Execute(int n)
         {
-            string[] data = new string[1];
-            if (input.Split(" ").Length > 1)
-            {
-                data = input.Split(" ");
-            }
-            else
-            {
-                data = new string[1] { input };
-            }
-            MyQueueList queue = new();
-            foreach (string s in data)
-            {
-                switch (s[0])
-                {
-                    case '1':
-                        queue.Push(s.Split(",")[1]);
-                        break;
-                    case '2':
-                        queue.Pop();
-                        break;
-                    case '3':
-                        queue.Top();
-                        break;
-                    case '4':
-                        queue.IsEmpty();
-                        break;
-                    case '5':
-                        queue.Print();
-                        break;
-                }
-            }
+            return Measurements.ProcessInput(Program.Inputs[n], new MyQueueQueue<object>());
         }
 
-        public static long Timer(int variableCount)
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return Measurements.Timer(variableCount, new MyQueueQueue());
+            return Values.GetEnumerator();
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            foreach(T t in Values)
+            {
+                yield return t;
+            }
         }
     }
 }

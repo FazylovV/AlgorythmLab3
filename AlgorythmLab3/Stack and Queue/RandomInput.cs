@@ -15,7 +15,7 @@ namespace AlgorythmLab3.Stack_and_Queue
             int countElementsInStructure = 0;
             for(int i = 0; i < lenght; i++)
             {
-                int operation = new Random().Next(1, 5);
+                int operation = new Random().Next(1, 6);
                 switch(operation)
                 {
                     case 1:
@@ -42,19 +42,19 @@ namespace AlgorythmLab3.Stack_and_Queue
         private static string CreateValue()
         {
             Random random = new();
-            if(random.Next(0, 1) == 0)
+            if(random.Next(0, 2) == 0)
             {
                 return CreateString(random);
             }
 
-            return random.Next().ToString();
+            return random.Next(-10000, 10001).ToString();
         }
 
         private static string CreateString(Random random)
         {
             char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
-            int maxLength = 25;
+            int maxLength = 5;
             int wordLength = new Random().Next(1, maxLength);
 
             StringBuilder sb = new();

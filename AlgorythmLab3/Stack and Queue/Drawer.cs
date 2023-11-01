@@ -15,7 +15,7 @@ namespace AlgorythmLab3.Stack_and_Queue
             foreach (Data e in data)
             {
                 plot.XLabel("Количество операций");
-                plot.YLabel("время, мс");
+                plot.YLabel("время, тики");
 
                 Scatter scatter = plot.Add.Scatter(e.XValues, e.YValues, GetRandomColor());
                 scatter.Label = e.Name;

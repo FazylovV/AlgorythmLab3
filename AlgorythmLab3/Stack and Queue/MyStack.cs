@@ -1,30 +1,61 @@
+using AlgorythmLab3.List;
+using System.Collections;
+
 namespace AlgorythmLab3.Stack_and_Queue;
 
-public class MyStack : IStorable
+public class MyStack<T> : IStorable<T>, IExecutable
 {
+    private List.LinkedList<T> _list;
     
-    
-    public void Push(object item)
+    public MyStack()
     {
-        throw new NotImplementedException();
+        _list = new List.LinkedList<T>();
+    }
+    
+    public void Push(T obj)
+    {
+        _list.AddHead(obj);
     }
 
     public object Pop()
     {
-        throw new NotImplementedException();
+        object obj = _list.head.Data;
+        _list.RemoveHead();
+        return obj;
     }
 
     public bool IsEmpty()
     {
-        throw new NotImplementedException();
+        return _list.Count == 0;
     }
 
     public object Top()
     {
-        throw new NotImplementedException();
+        return _list.head.Data;
     }
 
     public void Print()
+    {
+        Node<T> current = _list.head;
+
+        while (current != null)
+        {
+            Console.WriteLine(current.Data);
+            current = current.Next;
+        }
+    }
+
+    public long Execute(int n)
+    {
+        return Measurements.ProcessInput(Program.Inputs[n], new MyStack<object>());
+    }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        throw new NotImplementedException();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
     {
         throw new NotImplementedException();
     }

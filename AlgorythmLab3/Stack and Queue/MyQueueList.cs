@@ -2,20 +2,35 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AlgorythmLab3.Stack_and_Queue
 {
-    public class MyQueueList : IStorable, IExecutable
+    public class MyQueueList<T> : IStorable<T>, IExecutable
     {
-        public List.LinkedList<object>? Values { get; private set; } = new();
+        public List.LinkedList<T> Values { get; private set; } = new();
 
-        public void Push(object item)
+        public void Push(T item)
         {
             Values.AddTail(item);
         }
+        public void PushForConsole()
+        {
+            IStorable<object> structure = (IStorable<object>)this;
+            Console.Write("Введите новый элемент: ");
+            string element = Console.ReadLine();
+
+            while (element.Length == 0)
+            {
+                Console.Write("Неверный ввод, попробуйте снова: ");
+                element = Console.ReadLine();
+            }
+            structure.Push(element);
+        }
+
 
         public object Pop()
         {
@@ -23,70 +38,58 @@ namespace AlgorythmLab3.Stack_and_Queue
             Values.RemoveHead();
             return firstElement;
         }
-
+        public void PopForConsole()
+        {
+            object firstElement = Values.head.Data;
+            Values.RemoveHead();
+            Console.WriteLine(firstElement);
+        }
         public bool IsEmpty()
         {
             return Values.Count == 0;
+        }
+        public void IsEmptyForConsole()
+        {
+            if(Values.Count == 0)
+            {
+                Console.WriteLine("Очередь пуста.");
+                return;
+            }
+            Console.WriteLine("Очередь не пуста.");
         }
 
         public object Top()
         {
             return Values.head.Data;
         }
+        public void TopForConsole()
+        {
+            Console.WriteLine(Values.head.Data);
+        }
+
         public void Print()
         {
-            Node<object> value = Values.head;
-            while (value != null)
-            {
-                Console.Write($"{value.Data} ");
-                value = value.Next;
-            }
+            ConsoleHelper.PrintOldStructure((IStorable<object>)this, false);
         }
 
-        public void Execute(int n)
+        public long Execute(int n)
         {
-            ProcessInput(Program.Inputs[n]);
+            return Measurements.ProcessInput(Program.Inputs[n], new MyQueueList<object>());
         }
 
-        private void ProcessInput(string input)
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            string[] data = new string[1];
-            if(input.Split(" ").Length > 1)
-            {
-                data = input.Split(" ");
-            }
-            else
-            {
-                data = new string[1] { input };
-            }
-            MyQueueList queue = new();
-            foreach (string s in data)
-            {
-                switch (s[0])
-                {
-                    case '1':
-                        queue.Push(s.Split(",")[1]);
-                        break;
-                    case '2':
-                        queue.Pop();
-                        break;
-                    case '3':
-                        queue.Top();
-                        break;
-                    case '4':
-                        queue.IsEmpty();
-                        break;
-                    case '5':
-                        queue.Print();
-                        break;
-                }
-            }
+            return ((IEnumerable)this).GetEnumerator();
         }
 
-        public static long Timer(int variableCount)
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            return Measurements.Timer(variableCount, new MyQueueList());
+            Node<T> current = Values.head;
+            while (current != null)
+            {
+                yield return current.Data;
+                current = current.Next;
+            }
         }
     }
-
 }

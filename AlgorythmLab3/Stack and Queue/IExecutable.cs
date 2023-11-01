@@ -8,6 +8,6 @@ namespace AlgorythmLab3.Stack_and_Queue
 {
     public interface IExecutable
     {
-        public void Execute(int n);
+        public long Execute(int n);
     }
 }
