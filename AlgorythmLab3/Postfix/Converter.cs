@@ -5,85 +5,108 @@ namespace AlgorythmLab3.Postfix;
 
 public class Converter
 {
-        MyStack<int> s = new MyStack<int>();
-        private string str_in = Console.ReadLine();
-        private char last = ' ';
-        protected StringBuilder str_out = new StringBuilder();
- 
-        public int prior(char h)
+    /*MyStack<int> s = new MyStack<int>();
+    private string str_in = Console.ReadLine();
+    private char last = ' ';
+    protected StringBuilder str_out = new StringBuilder();
+
+    public int prior(char h)
+    {
+        switch (h)
         {
-            switch (h)
-            {
-                case '^': return 6;
-                case '*':
-                case '/': return 5;
-                case '+':
-                case '-': return 4;
-                case '=': return 3;
-                case ')': return 2;
-                case '(': return 1;
-                default: return 0;
-            } 
+            case '^': return 6;
+            case '*':
+            case '/': return 5;
+            case '+':
+            case '-': return 4;
+            case '=': return 3;
+            case ')': return 2;
+            case '(': return 1;
+            default: return 0;
         }
- 
-        public void algorithm()
-        { //здесь преобразуем строку в постфиксную. например 1*2+3  будет 12*3+
-            foreach (char x in str_in)
+    }
+
+    public void algorithm()
+    {
+        //здесь преобразуем строку в постфиксную. например 1*2+3  будет 12*3+
+        foreach (char x in str_in)
+        {
+            if (x == '-' && Char.IsLetterOrDigit(last) == false)
             {
- 
-                if (x == '-' && Char.IsLetterOrDigit(last) == false) { str_out.Append(x); continue; }
- 
-                if (char.IsLetterOrDigit(x) || x == '.') str_out.Append(x);
-                else if (x == '(') { s.Push(x); }
-                else if (x == ')')
+                str_out.Append(x);
+                continue;
+            }
+
+            if (char.IsLetterOrDigit(x) || x == '.') str_out.Append(x);
+            else if (x == '(')
+            {
+                s.Push(x);
+            }
+            else if (x == ')')
+            {
+                while (s.Peek() != '(')
                 {
-                    while (s.Peek() != '(')
-                    {
-                        str_out.Append(" ");
-                        str_out.Append(s.Pop());
-                    }
- 
-                    s.Pop();
+                    str_out.Append(" ");
+                    str_out.Append(s.Pop());
                 }
-                else
+
+                s.Pop();
+            }
+            else
+            {
+                while (s.Count > 0 && prior(s.Peek()) >= prior(x))
                 {
-                    while (s.Count > 0 && prior(s.Peek()) >= prior(x))
-                    {
-                        str_out.Append(" ").Append(s.Pop());
-                    }
-                    s.Push(x);
+                    str_out.Append(" ").Append(s.Pop());
                 }
-                if (x == '+' || x == '-' || x == '*' || x == '/' || x == '^') str_out.Append(" ");
- 
-                last = x;
+
+                s.Push(x);
             }
-            
-            while (s.Count > 0)
-            {
-                str_out.Append(" ");
-                str_out.Append(s.Pop());
-            }
-            //Console.WriteLine(str_out);            
+
+            if (x == '+' || x == '-' || x == '*' || x == '/' || x == '^') str_out.Append(" ");
+
+            last = x;
         }
- 
-        public void calculate(string s)
+
+        while (s.Count > 0)
         {
-            MyStack<int> stack = new MyStack<int>();
-            
-            
-            
+            str_out.Append(" ");
+            str_out.Append(s.Pop());
         }
- 
-        public double operation(string a, string b, string c)
+        //Console.WriteLine(str_out);            
+    }
+
+    public void calculate(string s)
+    {
+        MyStack<int> stack = new MyStack<int>();
+    }
+
+    public double operation(string a, string b, string c)
+    {
+        double d = 0;
+        switch (c)
         {
-            double d=0;
-            switch (c)
+            case "*":
             {
-                case "*": { d = Convert.ToDouble(a) * Convert.ToDouble(b); break; }
-                case "/": { d = Convert.ToDouble(a) / Convert.ToDouble(b); break; }
-                case "+": { d = Convert.ToDouble(a) + Convert.ToDouble(b); break; }
-                case "-": { d = Convert.ToDouble(a) * Convert.ToDouble(b); break; }
+                d = Convert.ToDouble(a) * Convert.ToDouble(b);
+                break;
             }
-            return d;
+            case "/":
+            {
+                d = Convert.ToDouble(a) / Convert.ToDouble(b);
+                break;
+            }
+            case "+":
+            {
+                d = Convert.ToDouble(a) + Convert.ToDouble(b);
+                break;
+            }
+            case "-":
+            {
+                d = Convert.ToDouble(a) * Convert.ToDouble(b);
+                break;
+            }
         }
+
+        return d;
+    }*/
 }
