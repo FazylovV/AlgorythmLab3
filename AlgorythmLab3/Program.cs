@@ -1,11 +1,13 @@
 ﻿using AlgorythmLab3.List;
 using AlgorythmLab3.Stack_and_Queue;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.ExceptionServices;
 
 namespace AlgorythmLab3
 {
     public class Program
     {
+        public static string[] Inputs;
 
         /// <summary>
         /// Основное меню для управления двусвязным списком.
@@ -17,11 +19,12 @@ namespace AlgorythmLab3
         /// </summary>
         public static void Main()
         {
-            Type dataType = ShowTheListTypeMenu();
-            ShowTheListMethodsMenu(dataType);
+            //Type dataType = ShowTheListTypeMenu();
+            //ShowTheListMethodsMenu(dataType);
+            ShowChooseMenu();
         }
 
-        public void ShowChooseMenu ()
+        public static void ShowChooseMenu ()
         {
             Console.CursorVisible = false;
             string header = "Выберите желаемую структуру для дальнейшей работы:";
@@ -42,14 +45,19 @@ namespace AlgorythmLab3
                         ShowTheListMethodsMenu(dataType);
                         break;
                     }
-                case "Стэк": 
+                case "Стэк":
                     {
-                        ShowTheStackMethodsMenu();
+                        Type dataType = ShowTheListTypeMenu();
+                        //ShowTheStackMethodsMenu(dataType);
                         break;
                     }
                 case "Очередь":
                     {
-                        ShowTheQueueMethodsMenu();
+                        MyQueueList<object> queue = new();
+                        while(true)
+                        {
+                            ShowTheQueueMethodsMenu(queue);
+                        }
                         break;
                     } 
                     
@@ -60,24 +68,33 @@ namespace AlgorythmLab3
         /// <summary>
         /// Метод, отображающий меню для управления очередью.
         /// </summary>
-        private void ShowTheQueueMethodsMenu()
+        private static void ShowTheQueueMethodsMenu(MyQueueList<object> queue)
         {
             Console.CursorVisible = false;
-            string header = ""; // Тут пишете заголовок меню
-            List<MenuItem> listTypeMenuItems = new()
+            string header = "Queue"; // Тут пишете заголовок меню
+            List<MenuItem> listQueueMenuItems = new()
             {
+                new MenuItem("Push"),
+                new MenuItem("Pop"),
+                new MenuItem("Top"),
+                new MenuItem("IsEmpty"),
+                new MenuItem("Print"),
                 //тут должны быть созданы итемы с названием кнопок
             };
-            Menu listTypeMenu = new(listTypeMenuItems);
+            Menu listTypeMenu = new(listQueueMenuItems);
             listTypeMenu.MoveThroughForSelect(header);
-            string selectedItem = listTypeMenuItems[listTypeMenu.SelectedItemIndex].ItemMessage;
+            string selectedItem = listQueueMenuItems[listTypeMenu.SelectedItemIndex].ItemMessage;
+            switch (selectedItem)
+            {
+                case
+            }
             // Дальше можете через выбранный предмет сделать свитч/кейс или рефлексию, как хотите
         }
 
         /// <summary>
         /// Метод, отображающий меню для управления стэком.
         /// </summary>
-        private void ShowTheStackMethodsMenu()
+        private static void ShowTheStackMethodsMenu()
         {
             Console.CursorVisible = false;
             string header = ""; // Тут пишете заголовок меню
