@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace AlgorythmLab3.Stack_and_Queue;
 
-public class MyStack<T> : IStorable<T>, IExecutable
+public class MyStack<T> : IStorable<T>, IExecutable, IConsolable
 {
     private List.LinkedList<T> _list;
     
@@ -12,9 +12,9 @@ public class MyStack<T> : IStorable<T>, IExecutable
         _list = new List.LinkedList<T>();
     }
     
-    public void Push(T obj)
+    public void Push(T value)
     {
-        _list.AddHead(obj);
+        _list.AddHead(value);
     }
 
     public object Pop()
@@ -50,13 +50,52 @@ public class MyStack<T> : IStorable<T>, IExecutable
         return Measurements.ProcessInput(Program.Inputs[n], new MyStack<object>());
     }
 
-    public IEnumerator<T> GetEnumerator()
-    {
-        throw new NotImplementedException();
-    }
-
     IEnumerator IEnumerable.GetEnumerator()
     {
-        throw new NotImplementedException();
+        return ((IEnumerable)this).GetEnumerator();
+    }
+
+    IEnumerator<T> IEnumerable<T>.GetEnumerator()
+    {
+        Node<T> current = _list.head;
+        while (current != null)
+        {
+            yield return current.Data;
+            current = current.Next;
+        }
+    }
+
+    public void PushForConsole()
+    {
+        IStorable<object> structure = (IStorable<object>)this;
+        Console.Write("Введите новый элемент: ");
+        string element = Console.ReadLine();
+
+        while (element.Length == 0)
+        {
+            Console.Write("Неверный ввод, попробуйте снова: ");
+            element = Console.ReadLine();
+        }
+        structure.Push(element);
+    }
+
+    public void PopForConsole()
+    {
+        Console.WriteLine(Pop());
+    }
+
+    public void IsEmptyForConsole()
+    {
+        if(_list.Count == 0)
+        {
+            Console.WriteLine("Стэк пуст.");
+            return;
+        }
+        Console.WriteLine("Стэк не пуст.");
+    }
+
+    public void TopForConsole()
+    {
+        Console.WriteLine(_list.head.Data);
     }
 }
