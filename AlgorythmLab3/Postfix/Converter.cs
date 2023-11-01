@@ -3,15 +3,9 @@ using AlgorythmLab3.Stack_and_Queue;
 
 namespace AlgorythmLab3.Postfix;
 
-public class Converter
+public static class Converter
 {
-    MyStack<char> st = new MyStack<char>();
-    private Stack<char> s = new Stack<char>();
-    private string str_in = Console.ReadLine();
-    private char last = ' ';
-    protected StringBuilder str_out = new StringBuilder();
-
-    public int prior(char h)
+    public static int GetPrior(char h)
     {
         switch (h)
         {
@@ -27,18 +21,21 @@ public class Converter
         }
     }
 
-    public void algorithm()
+    public static string ConvertToPostfix(string normal)
     {
+        Stack<char> s = new Stack<char>();
+        StringBuilder postfix = new StringBuilder();
+        char last = ' ';
         //здесь преобразуем строку в постфиксную. например 1*2+3  будет 12*3+
-        foreach (char x in str_in)
+        foreach (char x in normal)
         {
             if (x == '-' && Char.IsLetterOrDigit(last) == false)
             {
-                str_out.Append(x);
+                postfix.Append(x);
                 continue;
             }
 
-            if (char.IsLetterOrDigit(x) || x == '.') str_out.Append(x);
+            if (char.IsLetterOrDigit(x) || x == '.') postfix.Append(x);
             else if (x == '(')
             {
                 s.Push(x);
@@ -47,67 +44,33 @@ public class Converter
             {
                 while (s.Peek() != '(')
                 {
-                    str_out.Append(" ");
-                    str_out.Append(s.Pop());
+                    postfix.Append(" ");
+                    postfix.Append(s.Pop());
                 }
 
                 s.Pop();
             }
             else
             {
-                while (s.Count > 0 && prior(s.Peek()) >= prior(x))
+                while (s.Count > 0 && GetPrior(s.Peek()) >= GetPrior(x))
                 {
-                    str_out.Append(" ").Append(s.Pop());
+                    postfix.Append(" ").Append(s.Pop());
                 }
 
                 s.Push(x);
             }
 
-            if (x == '+' || x == '-' || x == '*' || x == '/' || x == '^') str_out.Append(" ");
+            if (x == '+' || x == '-' || x == '*' || x == '/' || x == '^') postfix.Append(" ");
 
             last = x;
         }
 
         while (s.Count > 0)
         {
-            str_out.Append(" ");
-            str_out.Append(s.Pop());
-        }
-        //Console.WriteLine(str_out);            
-    }
-
-    public void calculate(string s)
-    {
-        MyStack<int> stack = new MyStack<int>();
-    }
-
-    public double operation(string a, string b, string c)
-    {
-        double d = 0;
-        switch (c)
-        {
-            case "*":
-            {
-                d = Convert.ToDouble(a) * Convert.ToDouble(b);
-                break;
-            }
-            case "/":
-            {
-                d = Convert.ToDouble(a) / Convert.ToDouble(b);
-                break;
-            }
-            case "+":
-            {
-                d = Convert.ToDouble(a) + Convert.ToDouble(b);
-                break;
-            }
-            case "-":
-            {
-                d = Convert.ToDouble(a) * Convert.ToDouble(b);
-                break;
-            }
+            postfix.Append(" ");
+            postfix.Append(s.Pop());
         }
 
-        return d;
+        return postfix.ToString();
     }
 }
