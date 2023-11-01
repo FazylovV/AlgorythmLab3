@@ -87,7 +87,7 @@ namespace AlgorythmLab3.Stack_and_Queue
                         break;
                     case '2':
                         timer.Stop();
-                        Console.WriteLine($"Извлечён элемент {storable.Top}");
+                        Console.WriteLine($"Извлечён элемент {storable.Top()}");
                         ConsoleHelper.PrintOldStructure(storable, true);
                         timer.Start();
                         storable.Pop();
@@ -99,7 +99,7 @@ namespace AlgorythmLab3.Stack_and_Queue
                         break;
                     case '3':
                         timer.Stop();
-                        Console.WriteLine($"Показан элемент {storable.Top}");
+                        Console.WriteLine($"Показан элемент {storable.Top()}");
                         ConsoleHelper.PrintOldStructure(storable, true);
                         timer.Start();
                         storable.Top();
@@ -111,7 +111,7 @@ namespace AlgorythmLab3.Stack_and_Queue
                     case '4':
                         timer.Stop();
                         Console.WriteLine("Вызвана проверка на пустоту.");
-                        Console.WriteLine($"{storable.IsEmpty}");
+                        Console.WriteLine($"{storable.IsEmpty()}");
                         ConsoleHelper.PrintOldStructure(storable, true);
                         timer.Start();
                         storable.IsEmpty();

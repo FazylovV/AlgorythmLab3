@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AlgorythmLab3.Stack_and_Queue
 {
-    public class MyQueueList<T> : IStorable<T>, IExecutable
+    public class MyQueueList<T> : IStorable<T>, IExecutable, IConsolable
     {
         public List.LinkedList<T> Values { get; private set; } = new();
 
