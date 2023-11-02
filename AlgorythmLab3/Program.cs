@@ -20,13 +20,8 @@ namespace AlgorythmLab3
         /// </summary>
         public static void Main()
         {
-            // Type dataType = ShowTheListTypeMenu();
-            // ShowTheListMethodsMenu(dataType);
-            string normal = "2+2*8+4*6";
-            Console.WriteLine(normal);
-            string postfix = Converter.ConvertToPostfix(normal);
-            Console.WriteLine(postfix);
-            Console.WriteLine(Calculator.Calculate(postfix));
+            Type dataType = ShowTheListTypeMenu();
+            ShowTheListMethodsMenu(dataType);
         }
 
         public void ShowChooseMenu ()
@@ -91,7 +86,9 @@ namespace AlgorythmLab3
             string header = ""; // Тут пишете заголовок меню
             List<MenuItem> listTypeMenuItems = new()
             {
-               //тут должны быть созданы итемы с названием кнопок
+                new MenuItem("Стэк"), //
+                new MenuItem("Постфиксная запись") // PostfixConsole.GetPostfixAndCalculate
+                //тут должны быть созданы итемы с названием кнопок
             };
             Menu listTypeMenu = new(listTypeMenuItems);
             listTypeMenu.MoveThroughForSelect(header);

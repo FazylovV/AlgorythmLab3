@@ -5,39 +5,38 @@ namespace AlgorythmLab3.Stack_and_Queue;
 
 public class MyStack<T> : IStorable<T>, IExecutable, IConsolable
 {
-    private List.LinkedList<T> _list;
+    private List.LinkedList<T> Values;
     
     public MyStack()
     {
-        _list = new List.LinkedList<T>();
+        Values = new List.LinkedList<T>();
     }
     
     public void Push(T value)
     {
-        _list.AddHead(value);
+        Values.AddHead(value);
     }
 
     public object Pop()
     {
-        if (_list.head == null) return 0;
-        object obj = _list.head.Data;
-        _list.RemoveHead();
-        return obj;
+        object firstElement = Values.head.Data;
+        Values.RemoveHead();
+        return firstElement;
     }
 
     public bool IsEmpty()
     {
-        return _list.Count == 0;
+        return Values.Count == 0;
     }
 
     public object Top()
     {
-        return _list.head.Data;
+        return Values.head.Data;
     }
 
     public void Print()
     {
-        Node<T> current = _list.head;
+        Node<T> current = Values.head;
 
         while (current != null)
         {
@@ -58,7 +57,7 @@ public class MyStack<T> : IStorable<T>, IExecutable, IConsolable
 
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
-        Node<T> current = _list.head;
+        Node<T> current = Values.head;
         while (current != null)
         {
             yield return current.Data;
@@ -87,7 +86,7 @@ public class MyStack<T> : IStorable<T>, IExecutable, IConsolable
 
     public void IsEmptyForConsole()
     {
-        if(_list.Count == 0)
+        if(Values.Count == 0)
         {
             Console.WriteLine("Стэк пуст.");
             return;
@@ -97,6 +96,6 @@ public class MyStack<T> : IStorable<T>, IExecutable, IConsolable
 
     public void TopForConsole()
     {
-        Console.WriteLine(_list.head.Data);
+        Console.WriteLine(Values.head.Data);
     }
 }

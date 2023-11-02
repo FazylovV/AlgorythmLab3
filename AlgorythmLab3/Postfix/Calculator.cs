@@ -2,7 +2,7 @@ using AlgorythmLab3.Stack_and_Queue;
 
 namespace AlgorythmLab3.Postfix;
 
-public class Calculator
+public static class Calculator
 {
     public static int Calculate(string str)
     {

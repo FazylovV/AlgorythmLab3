@@ -14,7 +14,7 @@ public class PostfixConsole
         }
         
         Console.Write("В постфиксной записе: ");
-        string postfix = Converter.ConvertToPostfix(normal);
+        string postfix = Converter.ConvertToPostfix(normal).Substring(1);
         Console.WriteLine(postfix);
         
         Console.Write("Ответ: ");
