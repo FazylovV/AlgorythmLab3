@@ -70,14 +70,14 @@ namespace AlgorythmLab3.Stack_and_Queue
 
         public void Print()
         {
-            //Console.WriteLine(Values.ToString());
             StringBuilder sb = new();
             var current = Values.head;
             while(current != null)
             {
-                sb.Append(current.Data.ToString());
+                sb.Append(current.Data.ToString() + " ");
                 current = current.Next;
             }
+            //Console.WriteLine(Values.ToString());
         }
         internal void PrintForConsole()
         {

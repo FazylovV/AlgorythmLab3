@@ -40,18 +40,18 @@ namespace AlgorythmLab3.Stack_and_Queue
         public void Print()
         {
             StringBuilder sb = new();
-            foreach(var e in Values)
+            foreach(T element in Values)
             {
-                sb.Append(e + "  ");
+                sb.Append(element + "  ");
             }
             //Console.WriteLine(sb.ToString());
-            //ConsoleHelper.PrintOldStructure((IStorable<object>)this, false);
         }
 
         public void Push(T item)
         {
             Values.Enqueue(item);
         }
+
         public void PushForConsole()
         {
             IStorable<object> structure = (IStorable<object>)this;

@@ -41,7 +41,7 @@ public class MyStack<T> : IStorable<T>, IExecutable, IConsolable
 
         while (current != null)
         {
-            Console.WriteLine(current.Data);
+            //Console.WriteLine(current.Data);
             current = current.Next;
         }
     }
@@ -89,10 +89,10 @@ public class MyStack<T> : IStorable<T>, IExecutable, IConsolable
     {
         if(_list.Count == 0)
         {
-            Console.WriteLine("Стэк пуст.");
+            Console.WriteLine("Стек пуст.");
             return;
         }
-        Console.WriteLine("Стэк не пуст.");
+        Console.WriteLine("Стек не пуст.");
     }
 
     public void TopForConsole()

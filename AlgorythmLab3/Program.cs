@@ -38,7 +38,7 @@ namespace AlgorythmLab3
             List<MenuItem> listTypeMenuItems = new()
             {
                 new MenuItem("Связный список"),
-                new MenuItem("Стэк"),
+                new MenuItem("Стек"),
                 new MenuItem("Очередь")
             };
             Menu listTypeMenu = new(listTypeMenuItems);
@@ -52,9 +52,10 @@ namespace AlgorythmLab3
                         ShowTheListMethodsMenu(dataType);
                         break;
                     }
-                case "Стэк": 
+                case "Стек": 
                     {
-                        ShowTheStackMethodsMenu();
+                        MyStack<object> stack = new();
+                        ShowTheStackMethodsMenu(stack);
                         break;
                     }
                 case "Очередь":
@@ -142,17 +143,55 @@ namespace AlgorythmLab3
         /// <summary>
         /// Метод, отображающий меню для управления стэком.
         /// </summary>
-        private static void ShowTheStackMethodsMenu()
+        private static void ShowTheStackMethodsMenu(MyStack<object> stack)
         {
             Console.CursorVisible = false;
             string header = ""; // Тут пишете заголовок меню
             List<MenuItem> listTypeMenuItems = new()
-            {
+            {                
+                new MenuItem("Добавить в стек"),
+                new MenuItem("Удалить из стека"),
+                new MenuItem("Вывести последний элемент в стеке"),
+                new MenuItem("Проверка на пустоту"),
+                new MenuItem("Вывод стека"),
+                new MenuItem("Сделать замер времени работы стека(входные данные разной длины)"),
+                new MenuItem("Сделать замер времени работы стека(входные данные одинаковой длины)")
                //тут должны быть созданы итемы с названием кнопок
             };
             Menu listTypeMenu = new(listTypeMenuItems);
             listTypeMenu.MoveThroughForSelect(header);
             string selectedItem = listTypeMenuItems[listTypeMenu.SelectedItemIndex].ItemMessage;
+
+            switch (selectedItem)
+            {
+                case "Добавить в стек":
+                    stack.PushForConsole();
+                    break;
+                case "Удалить из стека":
+                    stack.PopForConsole();
+                    break;
+                case "Вывести последний элемент в стеке":
+                    stack.TopForConsole();
+                    break;
+                case "Проверка на пустоту":
+                    stack.IsEmptyForConsole();
+                    break;
+                case "Вывод стека":
+                    stack.Print();
+                    break;
+                case "Сделать замер времени работы стека(входные данные разной длины)":
+                    string[] dataQueueListinput = Measurements.RequestUserInput();
+                    Data dataQueueList = Measurements.RequestTheData("Stack", new MyStack<object>(), true, dataQueueListinput);
+                    Drawer.Draw("Stack", Measurements.SavePath, new List<Data> { dataQueueList }, "Количество операций");
+                    break;
+                case "Сделать замер времени работы стека(входные данные одинаковой длины)":
+                    List<Data> differentDataQueueList = Measurements.RequestTheDataForDifferentInput("Stack");
+                    Drawer.Draw("Different inputs for Stack", Measurements.SavePath, differentDataQueueList, "Количество операций вывода в усложнённых входных данных");
+                    break;
+            }
+            Console.WriteLine("Для продолжения нажмите любую кнопку...");
+            Console.ReadKey();
+            ShowTheStackMethodsMenu(stack);
             // Дальше можете через выбранный предмет сделать свитч/кейс или рефлексию, как хотите
         }
 
