@@ -75,6 +75,7 @@ public static class Converter
             postfix.Append(s.Pop());
         }
 
+        postfix.Replace("  ", " ");
         return postfix.ToString();
     }
 }

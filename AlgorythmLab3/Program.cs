@@ -13,25 +13,32 @@ namespace AlgorythmLab3
         /// </summary>
         public static Menu? ListMethodsMenu { get; private set; }
 
-        public static string[] Inputs;
+        public static List<string> Inputs = new();
 
         /// <summary>
         /// Метод входа в программу.
         /// </summary>
         public static void Main()
         {
-            Type dataType = ShowTheListTypeMenu();
-            ShowTheListMethodsMenu(dataType);
+            // Type dataType = ShowTheListTypeMenu();
+            // ShowTheListMethodsMenu(dataType);
+
+            /*string normal = "2+2*8+4*6";
+            Console.WriteLine(normal);
+            string postfix = Converter.ConvertToPostfix(normal);
+            Console.WriteLine(postfix);
+            Console.WriteLine(Calculator.Calculate(postfix));*/
+            ShowChooseMenu();
         }
 
-        public void ShowChooseMenu ()
+        public static void ShowChooseMenu ()
         {
             Console.CursorVisible = false;
             string header = "Выберите желаемую структуру для дальнейшей работы:";
             List<MenuItem> listTypeMenuItems = new()
             {
                 new MenuItem("Связный список"),
-                new MenuItem("Стэк"),
+                new MenuItem("Стек"),
                 new MenuItem("Очередь")
             };
             Menu listTypeMenu = new(listTypeMenuItems);
@@ -45,14 +52,16 @@ namespace AlgorythmLab3
                         ShowTheListMethodsMenu(dataType);
                         break;
                     }
-                case "Стэк": 
+                case "Стек": 
                     {
-                        ShowTheStackMethodsMenu();
+                        MyStack<object> stack = new();
+                        ShowTheStackMethodsMenu(stack);
                         break;
                     }
                 case "Очередь":
                     {
-                        ShowTheQueueMethodsMenu();
+                        MyQueueList<object> queue = new();
+                        ShowTheQueueMethodsMenu(queue);
                         break;
                     } 
                     
@@ -63,36 +72,130 @@ namespace AlgorythmLab3
         /// <summary>
         /// Метод, отображающий меню для управления очередью.
         /// </summary>
-        private void ShowTheQueueMethodsMenu()
+        private static void ShowTheQueueMethodsMenu(MyQueueList<object> queue)
         {
             Console.CursorVisible = false;
-            string header = ""; // Тут пишете заголовок меню
+            string header = "Очередь"; // Тут пишете заголовок меню
             List<MenuItem> listTypeMenuItems = new()
             {
+                new MenuItem("Добавить в очередь"),
+                new MenuItem("Удалить из очереди"),
+                new MenuItem("Вывести первый элемент в очереди"),
+                new MenuItem("Проверка на пустоту"),
+                new MenuItem("Вывод очереди"),
+                new MenuItem("Сделать замер времени работы очереди, реализованной на списке(входные данные разной длины)"),
+                new MenuItem("Сделать замер времени работы очереди, реализованной на стандартной очереди(входные данные разной длины)"),
+                new MenuItem("Сделать замер времени работы очереди, реализованной на списке(входные данные одинаковой длины)"),
+                new MenuItem("Сделать замер времени работы очереди, реализованной на стандартной очереди(входные данные одинаковой длины)"),
+                new MenuItem("Сравнить работу разных реализаций очередей"),
                 //тут должны быть созданы итемы с названием кнопок
             };
             Menu listTypeMenu = new(listTypeMenuItems);
             listTypeMenu.MoveThroughForSelect(header);
             string selectedItem = listTypeMenuItems[listTypeMenu.SelectedItemIndex].ItemMessage;
+
+            switch (selectedItem)
+            {
+                case "Добавить в очередь":
+                    queue.PushForConsole();
+                    break;
+                case "Удалить из очереди":
+                    queue.PopForConsole();
+                    break;
+                case "Вывести первый элемент в очереди":
+                    queue.TopForConsole();
+                    break;
+                case "Проверка на пустоту":
+                    queue.IsEmptyForConsole();
+                    break;
+                case "Вывод очереди":
+                    queue.PrintForConsole();
+                    break;
+                case "Сделать замер времени работы очереди, реализованной на списке(входные данные разной длины)":
+                    string[] dataQueueListinput = Measurements.RequestUserInput();
+                    Data dataQueueList = Measurements.RequestTheData("QueueList", new MyQueueList<object>(), true, dataQueueListinput);
+                    Drawer.Draw("QueueList", Measurements.SavePath, new List<Data> { dataQueueList }, "Количество операций");
+                    break;
+                case "Сделать замер времени работы очереди, реализованной на стандартной очереди(входные данные разной длины)":
+                    string[] dataQueueQueueinput = Measurements.RequestUserInput();
+                    Data dataQueueQueue = Measurements.RequestTheData("QueueQueue", new MyQueueQueue<object>(), true, dataQueueQueueinput);
+                    Drawer.Draw("QueueQueue", Measurements.SavePath, new List<Data> { dataQueueQueue }, "Количество операций");
+                    break;
+                case "Сравнить работу разных реализаций очередей":
+                    List<Data> dataDifferentQueues = Measurements.RequestTheDataForDifferentQueues();
+                    Drawer.Draw("Difference between queues", Measurements.SavePath, dataDifferentQueues, "Количество операций");
+                    break;
+                case "Сделать замер времени работы очереди, реализованной на списке(входные данные одинаковой длины)":
+                    List<Data> differentDataQueueList = Measurements.RequestTheDataForDifferentInput("QueueList");
+                    Drawer.Draw("Different inputs for QueueList", Measurements.SavePath, differentDataQueueList, "Количество операций вывода в усложнённых входных данных");
+                    break;
+                case "Сделать замер времени работы очереди, реализованной на стандартной очереди(входные данные одинаковой длины)":
+                    List<Data> differentDataQueueQueue = Measurements.RequestTheDataForDifferentInput("QueueQueue");
+                    Drawer.Draw("Different inputs for QueueQueue", Measurements.SavePath, differentDataQueueQueue, "Количество операций вывода в усложнённых входных данных");
+                    break;
+            }
+            Console.WriteLine("Для продолжения нажмите любую кнопку...");
+            Console.ReadKey();
+            ShowTheQueueMethodsMenu(queue);
             // Дальше можете через выбранный предмет сделать свитч/кейс или рефлексию, как хотите
         }
 
         /// <summary>
         /// Метод, отображающий меню для управления стэком.
         /// </summary>
-        private void ShowTheStackMethodsMenu()
+        private static void ShowTheStackMethodsMenu(MyStack<object> stack)
         {
             Console.CursorVisible = false;
             string header = ""; // Тут пишете заголовок меню
             List<MenuItem> listTypeMenuItems = new()
-            {
-                new MenuItem("Стэк"), //
-                new MenuItem("Постфиксная запись") // PostfixConsole.GetPostfixAndCalculate
-                //тут должны быть созданы итемы с названием кнопок
+            {                
+                new MenuItem("Добавить в стек"),
+                new MenuItem("Удалить из стека"),
+                new MenuItem("Вывести последний элемент в стеке"),
+                new MenuItem("Проверка на пустоту"),
+                new MenuItem("Вывод стека"),
+                new MenuItem("Сделать замер времени работы стека(входные данные разной длины)"),
+                new MenuItem("Сделать замер времени работы стека(входные данные одинаковой длины)"),
+                new MenuItem("Постфиксная запись")
+               //тут должны быть созданы итемы с названием кнопок
             };
             Menu listTypeMenu = new(listTypeMenuItems);
             listTypeMenu.MoveThroughForSelect(header);
             string selectedItem = listTypeMenuItems[listTypeMenu.SelectedItemIndex].ItemMessage;
+
+            switch (selectedItem)
+            {
+                case "Добавить в стек":
+                    stack.PushForConsole();
+                    break;
+                case "Удалить из стека":
+                    stack.PopForConsole();
+                    break;
+                case "Вывести последний элемент в стеке":
+                    stack.TopForConsole();
+                    break;
+                case "Проверка на пустоту":
+                    stack.IsEmptyForConsole();
+                    break;
+                case "Вывод стека":
+                    stack.Print();
+                    break;
+                case "Сделать замер времени работы стека(входные данные разной длины)":
+                    string[] dataQueueListinput = Measurements.RequestUserInput();
+                    Data dataQueueList = Measurements.RequestTheData("Stack", new MyStack<object>(), true, dataQueueListinput);
+                    Drawer.Draw("Stack", Measurements.SavePath, new List<Data> { dataQueueList }, "Количество операций");
+                    break;
+                case "Сделать замер времени работы стека(входные данные одинаковой длины)":
+                    List<Data> differentDataQueueList = Measurements.RequestTheDataForDifferentInput("Stack");
+                    Drawer.Draw("Different inputs for Stack", Measurements.SavePath, differentDataQueueList, "Количество операций вывода в усложнённых входных данных");
+                    break;
+                case "Постфиксная запись":
+                    PostfixConsole.GetPostfixAndCalculate();
+                    break;
+            }
+            Console.WriteLine("Для продолжения нажмите любую кнопку...");
+            Console.ReadKey();
+            ShowTheStackMethodsMenu(stack);
             // Дальше можете через выбранный предмет сделать свитч/кейс или рефлексию, как хотите
         }
 
@@ -169,5 +272,4 @@ namespace AlgorythmLab3
             ListMethodsMenu.InfiniteMoveThrough();
         }
     }
-}
-    
+}   
