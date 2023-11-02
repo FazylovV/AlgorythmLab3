@@ -7,14 +7,14 @@ namespace AlgorythmLab3.Stack_and_Queue
 {
     public class Drawer
     {
-        public static void Draw(string name, string pathPNG, List<Data> data)
+        public static void Draw(string plotName, string pathPNG, List<Data> data, string XLabel)
         {
             Plot plot = new();
-            plot.Title(name);
+            plot.Title(plotName);
 
             foreach (Data e in data)
             {
-                plot.XLabel("Количество операций");
+                plot.XLabel(XLabel);
                 plot.YLabel("время, тики");
 
                 Scatter scatter = plot.Add.Scatter(e.XValues, e.YValues, GetRandomColor());
@@ -22,7 +22,7 @@ namespace AlgorythmLab3.Stack_and_Queue
                 plot.Legend();
             }
 
-            plot.SavePng($"{pathPNG}\\{name}Measures.png", 1000, 1000);
+            plot.SavePng($"{pathPNG}\\{plotName}Measures.png", 1000, 1000);
         }
 
         private static Color GetRandomColor()

@@ -39,7 +39,13 @@ namespace AlgorythmLab3.Stack_and_Queue
 
         public void Print()
         {
-            ConsoleHelper.PrintOldStructure((IStorable<object>)this, false);
+            StringBuilder sb = new();
+            foreach(var e in Values)
+            {
+                sb.Append(e + "  ");
+            }
+            //Console.WriteLine(sb.ToString());
+            //ConsoleHelper.PrintOldStructure((IStorable<object>)this, false);
         }
 
         public void Push(T item)
