@@ -42,8 +42,9 @@ namespace AlgorythmLab3.Stack_and_Queue
         {
             object firstElement = Values.head.Data;
             Values.RemoveHead();
-            Console.WriteLine(firstElement);
+            Console.WriteLine($"Из очереди удалён элемент: {firstElement}");
         }
+
         public bool IsEmpty()
         {
             return Values.Count == 0;
@@ -64,10 +65,21 @@ namespace AlgorythmLab3.Stack_and_Queue
         }
         public void TopForConsole()
         {
-            Console.WriteLine(Values.head.Data);
+            Console.WriteLine($"Первый в очереди элемент: {Values.head.Data}");
         }
 
         public void Print()
+        {
+            StringBuilder sb = new();
+            var current = Values.head;
+            while(current != null)
+            {
+                sb.Append(current.Data.ToString() + " ");
+                current = current.Next;
+            }
+            //Console.WriteLine(Values.ToString());
+        }
+        internal void PrintForConsole()
         {
             ConsoleHelper.PrintOldStructure((IStorable<object>)this, false);
         }

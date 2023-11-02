@@ -9,11 +9,11 @@ namespace AlgorythmLab3.Stack_and_Queue
 {
     public static class Input
     {
-        public static string CreateInput(int lenght)
+        public static string CreateInput(int operationCount)
         {
             StringBuilder sb = new();
             int countElementsInStructure = 0;
-            for(int i = 0; i < lenght; i++)
+            for(int i = 0; i < operationCount; i++)
             {
                 int operation = new Random().Next(1, 6);
                 switch(operation)
@@ -34,6 +34,17 @@ namespace AlgorythmLab3.Stack_and_Queue
                         sb.Append("5 ");
                         break;
                 }
+            }
+
+            return sb.ToString().Trim();
+        }
+
+        public static string CreateSimpleInput(int operationCount)
+        {
+            StringBuilder sb = new();
+            for (int i = 0; i < operationCount; i++)
+            {
+                sb.Append($"1,{CreateValue()} ").ToString();
             }
 
             return sb.ToString().Trim();
